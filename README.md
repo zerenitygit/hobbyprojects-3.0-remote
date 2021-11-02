@@ -1,0 +1,3 @@
+# hobbyprojects
+
+Currently working with CSS, HTML and JavaScript. The main focus is currently on functionality rather than design, hence more focus on JavaScript. After becoming satisified with the functional implementations across my web pages using JavaScript, I will aim to learn some Node.js to handle email functionality, searchbox functionality as well as login functionality (confusued whether or not PHP are better for these listed things). Database implementation will also be worked on in order to achieve the previously future planned Node.js projects. I may also explore some React.js and find out it's use cases and benefits. Eventually I will also begin exploring C, C++ and potentially C# to see how they are used and where. eofkoekf oefoekf ggrg gregreg

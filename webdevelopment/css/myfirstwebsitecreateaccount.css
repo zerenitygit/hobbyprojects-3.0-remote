@@ -1,0 +1,208 @@
+body{
+    padding: 0%;
+    margin: 0%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+    text-align: center;
+}
+
+.background{
+    background: linear-gradient(rgba(30, 30, 44, 0.2), rgba(33, 38, 88, 0.2)),  url("https://img.wallpapersafari.com/tablet/2560/1700/58/88/jlBFpd.jpeg");
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#logo{
+position: absolute;
+top: -10%;
+
+}
+
+.belowimg{
+    width: 90px;
+    
+}
+
+.box{
+    background: rgba(31, 35, 58, 0.884);
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px white solid;
+    padding: 40px;
+    position: relative;
+    padding-top: 100px;
+}
+
+#boxtitle{
+    color: white;
+    margin-bottom: 0;
+    font-size: 28px;
+}
+
+h5{
+    margin-top: 30px;
+    margin-bottom: 55px;
+}
+
+form input{
+    display: block;
+    padding: 20px;
+    margin: auto;
+    margin-bottom: 20px;
+    width: 70%;
+    font-size: 18px;
+    text-align: center;
+    border: 4px white solid;
+}
+
+ .password2{
+    margin-bottom: 0;
+}
+
+form input::placeholder{
+    text-align: center;
+}
+
+form input:focus::placeholder{
+        color: transparent; 
+}
+
+form{
+    width: 100%;
+}
+
+#buttoncontainer{
+    width: 100%;
+    outline: 2px yellow solid;
+}
+
+button{
+    text-align: center;
+    margin: auto;
+}
+
+.inputContainer{
+    position: relative;
+}
+
+.fa-exclamation, .fa-check-square{
+    position: absolute;
+    top: 22%;
+    right: 18%;
+    font-size: 20px;
+    visibility: hidden;
+}
+
+.fa-check-square{
+    color: green;
+}
+
+.fa-exclamation{
+    color: rgb(146, 60, 60);
+    margin-right: 5px;
+}
+
+.error input{
+    border-color: red;
+    background: rgb(255, 241, 214);
+}
+
+
+.success input{
+border-color: green;
+background: rgb(230, 249, 255);
+}
+
+.success .fa-check-square{
+    visibility: visible;
+}
+
+.error .fa-exclamation{
+    visibility: visible;
+}
+
+.inputContainer p{
+    visibility: hidden;
+}
+
+.error p{
+    visibility: visible;
+    color: red;
+}
+
+.fa-info-circle{
+    position: absolute;
+    top: 25%;
+    right: 8%;
+cursor: pointer;
+}
+
+
+.infotext{
+    color: black;
+    background: rgb(231, 215, 143);
+    display: inline-block;
+    padding: 5px 5px;
+    visibility: hidden;
+    position: absolute;
+    bottom: -11%;
+    right: 24%;
+    width: 50%;
+}
+
+.fa-times-circle{
+    margin-left: 7px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+.createmyaccount a{
+text-decoration: none;
+color: black;
+padding: 10px 120px;
+display: inline-block;
+}
+
+.createmyaccount{
+    background: linear-gradient(to right, rgba(102, 102, 102, 0.863), rgba(255, 255, 255, 0.938), rgb(184, 184, 184));
+    border-radius: 80px;
+    display: inline-block;
+    border: 3px rgb(255, 255, 255) solid;
+}
+
+.createmyaccount:hover{
+    background: rgb(227, 255, 175);
+    transition: 1s;
+    
+}
+
+.twoimagesflex{
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    font-style: italic;
+}
+
+.lastsectioninternalflex{
+    display: flex;
+    align-items: center;
+}
+
+#lastfirstimg{
+    margin-top: 10px;
+}
+
+
+@media (max-width: 1652px){
+    .infotext{
+width: 70%;
+right: 14%;
+    }
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create An Account</title>
+    <script src="https://kit.fontawesome.com/becd6eb778.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/myfirstwebsitecreateaccount.css">
+</head>
+<body>
+ <div class="background">
+        
+     <div class="box">
+         <img id="logo" src="./wdimages/websitelogo.png" alt="">
+     <h3 id="boxtitle">Create An Account Now!</h3>
+     <h5>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Animi soluta ducimus ex. <br> Blanditiis, expedita dolores quasi nulla maxime magni eius enim incidunt facilis natus modi et tempore. Optio, veritatis architecto.</h5>
+     <form action="">
+        <div class="inputContainer">
+            <input class="username" type="text" placeholder="Username" onchange="checkUsernameInput(this)" />
+            <i class="fas fa-check-square"></i><i class="fas fa-exclamation"></i>
+            <i id="infobox1" class="fas fa-info-circle" onclick="openInfo(this)"></i>
+            <div class="infotext" id="infotext1"><small>Username needs to contain at least 8 characters.  Can not contain special characters.<i id="usernameinfo" class="fas fa-times-circle" onclick="closeInfo(this)"></i></small></div>
+            <p>Error Message</p>
+            </div>
+            
+            <div class="inputContainer">
+            <input class="email" type="email" placeholder="Email" onchange="checkEmail(this)" />
+            <i class="fas fa-check-square"></i><i class="fas fa-exclamation"></i>
+
+            <p>Error Message</p>
+            </div>
+            
+            <div class="inputContainer">
+        
+            <input class="password" type="password" placeholder="Password" onkeyup="checkPasswordLength(this)"/>
+            <i class="fas fa-check-square"></i><i class="fas fa-exclamation"></i>
+            <i id="infobox2" class="fas fa-info-circle" onclick="openInfo(this)"></i>
+            <div class="infotext" id="infotext2"><small>Password must be at least 6 characters. Must contain 2 capital letters, 2 numbers and 1 special character. <i id="passwordinfo" class="fas fa-times-circle" onclick="closeInfo(this)"></i></small></div>
+            <p>Error Message </p>
+            
+            </div>
+
+
+            <div class="inputContainer ">
+        
+                <input class="password2" type="password" placeholder="Repeat Password" onkeyup="checkMatch(this)" />
+                <i class="fas fa-check-square"></i><i class="fas fa-exclamation"></i>
+    
+                <p>Error Message</p>
+                </div>
+            
+            <div class="createmyaccount">
+                <a href="">Create My Account</a>
+            </div>
+     </form> <!--info box next to create password and username-->
+     
+     <div class="twoimagesflex">
+         <div>
+<small>Powered By: <br> Enquinox Hasswell</small>
+<div id="lastfirstimg"><img class="belowimg" src="https://www.pngkey.com/png/full/139-1396320_our-technology-transparent-tech-lines-png.png" alt=""></div>
+         </div>
+         <div class="lastsectioninternalflex">
+<small>Contact Support: <br> +1 4234 3145 512 31 </small>
+<img class="belowimg" src="https://freepngimg.com/thumb/categories/745.png" alt="">
+         </div>
+     </div>
+     </div>
+ </div>
+
+
+ <script src="./javascript/myfirstwebsitecreateaccount.js"></script>
+</body>
+</html>

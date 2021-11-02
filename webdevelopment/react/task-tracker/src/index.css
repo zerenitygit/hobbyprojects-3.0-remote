@@ -1,0 +1,289 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;1,300;1,400&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Nunito", sans-serif;
+}
+
+.appcontainer {
+  min-height: 100vh;
+  margin: auto;
+  background: rgb(33, 33, 36);
+  padding-top: 200px;
+}
+
+.appcontainer.lightmode {
+  background: rgb(240, 240, 240);
+}
+
+.header {
+  width: 75%;
+  margin: auto;
+  display: flex;
+  border-bottom: 2px rgb(131, 131, 131) solid;
+  padding: 20px 0px;
+}
+
+.headersection1 {
+  flex-basis: 50%;
+  color: white;
+  display: flex;
+
+  align-items: center;
+}
+
+.headersection1.lightmode {
+  color: black;
+}
+
+.headersection2 {
+  flex-basis: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+form {
+  width: 45%;
+  margin: auto;
+  padding-top: 80px;
+  color: white;
+  margin-bottom: 80px;
+}
+
+form.lightmode {
+  color: black;
+}
+
+.taskscontainer {
+  width: 75%;
+  margin: auto;
+  color: white;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 40px 0px;
+}
+
+.noaddedtasks {
+  padding-top: 45px;
+  width: 75%;
+  margin: auto;
+  color: white;
+}
+
+.noaddedtasks.lightmode {
+  color: black;
+}
+
+.task {
+  background: rgb(40, 40, 44);
+  padding: 35px 40px;
+  position: relative;
+  margin-bottom: 30px;
+  margin-right: 30px;
+  border-radius: 20px;
+}
+
+.uppertasktext {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.lowertasktext {
+  font-size: 18px;
+}
+
+.task.lightmode {
+  color: black;
+  background: rgb(226, 226, 226);
+}
+
+.taskdeletecontainer {
+  position: absolute;
+  width: 100%;
+  text-align: right;
+  bottom: 0;
+  left: 0;
+  padding-bottom: 2px;
+}
+
+.taskdelete {
+  cursor: pointer;
+  font-size: 1.4rem;
+  margin-right: 5px;
+}
+
+.taskinput,
+.wheninput {
+  width: 100%;
+  background: rgb(28, 28, 28);
+  border: none;
+  padding: 1rem 0.5rem;
+  color: white;
+  font-size: 1.2rem;
+  margin: 5px 0;
+}
+
+.taskinput.lightmode,
+.wheninput.lightmode {
+  background: rgb(189, 189, 189);
+  color: black;
+}
+
+.taskinput.lightmode::placeholder,
+.wheninput.lightmode::placeholder {
+  color: rgb(92, 92, 92);
+}
+
+form > div {
+  margin: 1rem 0;
+}
+
+.sethighlightbox {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sethighlightchecker {
+  margin-left: 6.2rem;
+  width: 20px;
+  height: 20px;
+}
+
+.addtaskbox {
+  text-align: center;
+}
+
+.addtaskbox button {
+  border: none;
+  width: 20%;
+  background: rgb(91, 187, 131);
+  border-radius: 50px;
+  padding: 1rem 0;
+}
+
+.addmenutaskdiv {
+  position: relative;
+}
+
+.errorboxcontainer {
+  position: absolute;
+  top: 48%;
+  left: 102%;
+  width: 59%;
+}
+
+.errorbox {
+  color: rgb(51, 51, 51);
+  display: inline;
+  background: rgb(189, 90, 90);
+  border-radius: 10px;
+  width: 20%;
+  padding: 3px 8px;
+}
+
+.highlightcolor {
+  position: relative;
+}
+
+.changehighlightcolormenu {
+  position: absolute;
+  max-width: 300px;
+  background: rgb(255, 255, 255);
+  width: 200%;
+  left: -55%;
+  top: 135%;
+  z-index: 9999;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  padding: 2.5px 0;
+}
+
+.colorinmenu {
+  margin: 2px 2px;
+}
+
+.changehighlightcolormenu ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.changehighlightcolormenu ul li {
+  margin: 5px 10px;
+  padding: 0.3rem 1rem;
+  border-radius: 2rem;
+}
+
+.chromepicker {
+  position: absolute;
+  left: 133%;
+  top: 135%;
+  z-index: 99999;
+}
+
+.colormenuclose {
+  color: rgb(0, 0, 0);
+  float: center;
+  font-size: 30px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.headersection2 button {
+  padding: 15px 15px;
+  border: none;
+  border-radius: 40px;
+}
+
+.headersection2 button {
+  margin-right: 30px;
+}
+
+.clearalltasks {
+  background: rgb(189, 90, 90);
+  display: flex;
+  align-items: center;
+}
+
+.lightdarkmode {
+  background: rgb(44, 45, 48);
+  color: rgb(245, 245, 245);
+  display: flex;
+  align-items: center;
+}
+
+.lightdarkmode.lightmode {
+  background: white;
+  color: black;
+}
+
+.highlightcolor button {
+  width: 130px;
+}
+
+.clearalltaskstrashcan {
+  margin-left: 3px;
+  font-size: 20px;
+}
+
+.sun,
+.moon {
+  margin-left: 4px;
+  font-size: 16px;
+}
