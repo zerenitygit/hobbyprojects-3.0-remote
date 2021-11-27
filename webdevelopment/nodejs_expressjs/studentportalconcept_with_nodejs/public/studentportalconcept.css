@@ -1,0 +1,403 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: block;
+}
+
+.navbar {
+  background: rgb(24, 24, 32);
+  display: flex;
+  color: white;
+}
+
+#websitelogo {
+  max-width: 70px;
+  max-height: 70px;
+  width: 100%;
+}
+
+.navsection1 {
+  width: 6%;
+  display: flex;
+}
+
+.fa-bars {
+  font-size: 30px;
+  padding-left: 30px;
+  padding-top: 20px;
+  margin-right: 10px;
+  z-index: 999;
+}
+
+#navul ul a {
+  color: rgb(216, 206, 112);
+}
+
+#navul ul li {
+  background: rgb(24, 24, 32);
+  padding: 30px 20px;
+}
+
+#navul ul li:not(:last-child) {
+  border-bottom: 2px white solid;
+}
+
+#navul > li {
+  display: inline-block;
+  position: relative;
+  padding: 10px 10px;
+}
+
+#navul > li:not(:last-child) {
+  margin-right: 40px;
+}
+
+#navul > li:hover {
+  cursor: pointer;
+  background: rgb(226, 226, 226);
+  transition: 1s;
+  color: black;
+}
+
+#navul {
+  text-align: center;
+}
+
+li ul {
+  padding: 20px 40px;
+  list-style: none;
+  padding: 0%;
+}
+
+#navul .fa-caret-down {
+  margin-left: 10px;
+}
+
+#messagesul.active,
+#coursesul.active,
+#groupsul.active,
+#resultsul.active,
+#myeducationul.active,
+#helpul.active {
+  display: block;
+}
+
+#messagesul,
+#coursesul,
+#groupsul,
+#resultsul,
+#myeducationul,
+#helpul {
+  display: none;
+  position: absolute;
+  width: 100%;
+  background: rgb(230, 230, 230);
+  left: 0%;
+  top: 100%;
+  color: black;
+}
+
+#messagesul li {
+  padding: 10px 10px;
+}
+
+#coursesul {
+  display: none;
+}
+
+#groupsul {
+  display: none;
+}
+
+#resultsul {
+  display: none;
+}
+
+#myeducationul {
+  display: none;
+}
+
+#helpul {
+  display: none;
+}
+
+.fa-chevron-circle-down {
+  font-size: 30px;
+}
+
+.navsection2 {
+  width: 65%;
+  position: relative;
+  padding-left: 100px;
+  box-sizing: border-box;
+}
+
+#messagesinnerul {
+  list-style: none;
+  padding: 0%;
+  background: rgb(216, 187, 216);
+  display: none;
+}
+
+nav li a {
+  text-decoration: none;
+  color: white;
+}
+
+.midsectionflexwrapper {
+  display: flex;
+}
+
+.sidebar {
+  background: rgb(24, 24, 32);
+  width: 5%;
+  display: none;
+  color: white;
+}
+
+.sidebar li {
+  position: relative;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+.sidebar i {
+  font-size: 50px;
+  cursor: pointer;
+}
+
+.sidebar li:not(:first-child) {
+  margin-top: 60px;
+}
+
+.addertext {
+  margin-bottom: 50px;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+#sidebar.active {
+  display: block;
+}
+
+#closesidebar {
+  font-size: 26px;
+}
+
+.fa-trash-alt {
+  margin: 20px;
+  cursor: pointer;
+  font-size: 20px;
+  float: right;
+}
+
+.clear {
+  clear: both;
+}
+
+p {
+  margin: 0;
+}
+
+.flexregions {
+  display: flex;
+  height: 94.5vh;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+  width: 100%;
+}
+
+.flexregions img {
+  max-width: 500px;
+  width: 100%;
+}
+
+.region {
+  width: 33.333%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  outline: 1px rgb(216, 216, 216) solid;
+  background: rgb(196, 196, 196);
+}
+
+.midbox {
+  text-align: center;
+  width: auto;
+  height: auto;
+}
+
+.dragOriginRegion {
+  opacity: 0.2;
+}
+
+.draggedBox {
+  background: linear-gradient(rgba(0, 0, 0, 0.692), rgba(0, 0, 0, 0.733));
+}
+
+.navsection3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
+  position: relative;
+  text-align: center;
+}
+
+.navsection3 i {
+  margin-left: 20px;
+}
+
+#usersettingspicarrow {
+  display: flex;
+  align-items: center;
+  width: 40%;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.navsection4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  padding-right: 40px;
+}
+
+.navsection4 img {
+  width: 50px;
+  height: 30px;
+}
+
+#userpic {
+  width: 40px;
+}
+
+.studentpicborder {
+  border: 3px white solid;
+
+  overflow: hidden;
+}
+
+#usersettingsul {
+  position: absolute;
+  top: 72%;
+  background: rgb(24, 24, 32);
+  list-style: none;
+  padding: 0;
+  cursor: auto;
+  display: none;
+}
+
+#usersettingsul li {
+  padding: 20px 20px;
+}
+
+#usersettingsul li:not(:last-child) {
+  border-bottom: 2px rgb(255, 255, 255) solid;
+}
+
+#usersettingsul li p {
+  cursor: pointer;
+  color: rgb(216, 206, 112);
+}
+
+.selectlanguage {
+  position: relative;
+}
+
+#selectlanguageul {
+  position: absolute;
+  top: 100%;
+  right: -50%;
+  list-style: none;
+  padding: 0;
+  background: rgb(24, 24, 32);
+  color: rgb(216, 206, 112);
+  width: 200%;
+  display: none;
+  cursor: auto;
+}
+
+.selectlanguage img {
+  width: 30px;
+  height: 20px;
+}
+
+.selectlanguage li {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 30px 15px;
+  cursor: pointer;
+  padding: 10px 10px;
+  border-bottom: 2px rgb(255, 255, 255) solid;
+}
+
+#usersettingsul.active {
+  display: block;
+}
+
+#selectlanguageul.active {
+  display: block;
+}
+
+#languagetext {
+  margin-right: 10px;
+}
+
+.languagetogglebar {
+  display: flex;
+  border-radius: 10px;
+  padding: 5px 5px;
+  width: 140%;
+  justify-content: space-around;
+  cursor: pointer;
+  align-items: center;
+}
+
+.flexbasis33 {
+  flex-basis: 33.333333333%;
+}
+
+.flexbasis50 {
+  flex-basis: 50%;
+}
+
+.flexbasis100 {
+  flex-basis: 100%;
+}
+
+.adderror {
+  position: absolute;
+  top: 30%;
+  left: 120%;
+  background: rgb(201, 130, 0);
+  width: 500%;
+  display: none;
+  border-radius: 10px;
+  font-size: 18px;
+  padding: 10px 0px;
+}
+
+.adderror.activeerror {
+  display: block;
+}
+
+#penadder {
+  margin-top: 40px;
+}
