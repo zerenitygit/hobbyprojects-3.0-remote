@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      #wrapper {
+        width: 80%;
+        margin: auto;
+      }
+      #flexcontainer {
+        display: flex;
+      }
+      #leftside,
+      #rightside {
+        flex-basis: 50%;
+      }
+
+      #rightside {
+        outline: 2px red solid;
+        padding-left: 30px;
+      }
+      ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="flexcontainer">
+        <div id="lefrside"><img src="<%= profile.profpic %>" alt="" /></div>
+        <div id="rightside">
+          <p>
+            <%= profile.firstname%> <%= profile.lastname %>, <%= profile.age %>
+          </p>
+          <p><%= profile.role %></p>
+          <p>Favorite Hobbies:</p>
+          <ul>
+            <% profile.hobbies.forEach((hobby) => { %>
+            <li><%= hobby %></li>
+            <% }) %>
+          </ul>
+          <p>Favorite Quote:</p>
+          <p>"<%= profile.favoritequote %>"</p>
+        </div>
+      </div>
+      <h3>Job info</h3>
+      <p><%= profile.jobinfo %></p>
+      <h3>Educational Background</h3>
+      <p><%= profile.educationalbg %></p>
+      <div>
+        <a href="/profiles"><button>go back to all profiles</button></a>
+        <a href="/profiles/<%= nextperson.id %>"
+          ><button>go to: <%= nextperson.firstname %></button></a
+        >
+      </div>
+    </div>
+  </body>
+</html>

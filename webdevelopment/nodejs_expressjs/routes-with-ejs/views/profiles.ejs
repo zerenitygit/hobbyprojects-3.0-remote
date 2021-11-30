@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profiles</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      #wrapper {
+        width: 80%;
+        margin: auto;
+      }
+      #container {
+        display: flex;
+      }
+
+      #leftside,
+      #rightside {
+        flex-basis: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <a href="/"><button>Return to homepage</button></a>
+      <% profiles.forEach((profile) => { %>
+      <div id="container">
+        <div id="leftside"><img src="<%= profile.profpic %>" alt="" /></div>
+        <div id="rightside">
+          <p>Firstname: <%= profile.firstname %></p>
+          <p>Lastname: <%= profile.lastname %></p>
+          <p>Age: <%= profile.age %></p>
+          <p>Role: <%= profile.role %></p>
+          <ul>
+            <% profile.hobbies.forEach((hobby) => { %>
+            <li><%= hobby %></li>
+            <% }); %>
+          </ul>
+          <p>Favorite Quote: <%= profile.favoritequote %></p>
+          <a href="/profiles/<%= profile.id %>"
+            ><button>View more about <%= profile.firstname %></button></a
+          >
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  </body>
+</html>
