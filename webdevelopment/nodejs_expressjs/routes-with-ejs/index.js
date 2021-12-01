@@ -1,25 +1,19 @@
 const express = require("express");
-const multer = require("multer");
 const app = express();
+const path = require("path");
 
-app.use("/uploads", express.static("uploads"));
 app.use(express.urlencoded({ extended: true }));
 
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./uploads");
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-var upload = multer({ storage: storage });
+app.set("view engine", "ejs");
+
+const publicpath = path.join(__dirname + "/public");
+
+app.use(express.static("public"));
 
 var profiles = [
   {
     id: 1,
-    profpic:
-      "https://36z59wriv543qd814533ma8z-wpengine.netdna-ssl.com/wp-content/uploads/2018/11/303_Berggruen_Institute-Nils_Gilmani-e1542734040382-400x400.jpg",
+    profpic: "/pers1.jpg",
     firstname: "Martin",
     lastname: "Pelvis",
     age: "43",
@@ -33,8 +27,7 @@ var profiles = [
   },
   {
     id: 2,
-    profpic:
-      "https://ubernewsroomapi.10upcdn.com/wp-content/uploads/2018/12/Nikki-Krishnamurthy-400x400.jpg",
+    profpic: "/pers2.jpg",
     firstname: "Selena",
     lastname: "Franken",
     age: "25",
@@ -48,8 +41,7 @@ var profiles = [
   },
   {
     id: 3,
-    profpic:
-      "https://www.sasaki.com/wp-content/uploads/2019/10/Master_CBraga-1-400x400.jpg",
+    profpic: "/pers3.jpg",
     firstname: "Hanna",
     lastname: "Montana",
     age: "26",
@@ -67,24 +59,7 @@ var profiles = [
     educationalbg:
       "diowqdjioq pqpqpqpqri iejroi joifjef nn jn onfoewnfo oqidqowdj pjwqpdjqw jpdqwjidj iwjd jqpdjiqwdjowjdo joidnwdnon doqwndoinwoiqdn ondoiqwndoiqnwdoqdwqondnqondonqd owqndqo idqwj owiqdjowij",
   },
-  {
-    id: 4,
-    profpic:
-      "https://www.blinkfilmsuk.com/wp-content/uploads/2018/05/Dan-edit-square-400x400.jpg",
-    firstname: "Francis",
-    lastname: "Pelegrone",
-    age: "46",
-    role: "Devops Technician",
-    hobbies: ["Martial Arts", "Watching Movies"],
-    favoritequote: "lkhoro wiwi ccsj feoofdk fkwo",
-    jobinfo:
-      "lfwplfp oweporpewi eworopewkok pok ok opm m m m,qpoweqpw pqwekowepoqwk poekwopdk omwdpqmw pdqwmdpm powmdpoqwmdpmc pcmqwpodmowqmrpfmp ",
-    educationalbg:
-      "qoieiititmvkmvkm kmviemwp mvpwmepmvm  pvome  pveofmpewrewp jrpejwrp jprqrq råq åorroj pojr m pm p m poerm qå å qmåorqr morm pmrqwmpwrmqpwrm pwrmpqwmpop",
-  },
 ];
-
-app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
   res.render("./home.ejs");
@@ -122,13 +97,9 @@ app.post("/profiles", (req, res) => {
   addedPersonWithID.hobbies = addedPersonWithID.hobbies.replace(" ,", ",");
   addedPersonWithID.hobbies = addedPersonWithID.hobbies.split(",");
 
-  console.log(addedPersonWithID.hobbies);
-  console.log(addedPersonWithID.hobbies);
-
   profiles.push(addedPersonWithID);
 
   res.redirect("/profiles");
-  console.log(profiles);
 });
 
 app.listen(3000, () => console.log("Listening on port 3000..."));
