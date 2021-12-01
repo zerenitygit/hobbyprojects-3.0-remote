@@ -1,5 +1,19 @@
 const express = require("express");
+const multer = require("multer");
 const app = express();
+
+app.use("/uploads", express.static("uploads"));
+app.use(express.urlencoded({ extended: true }));
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+var upload = multer({ storage: storage });
 
 var profiles = [
   {
@@ -93,6 +107,28 @@ app.get("/profiles/:id", (req, res) => {
     profile: profile,
     nextperson: nextperson,
   });
+});
+
+app.get("/addprofilepage", (req, res) => {
+  res.render("./addprofilepage.ejs");
+});
+
+app.post("/profiles", (req, res) => {
+  var addedPerson = req.body;
+  var addedPersonWithID = { id: profiles.length + 1, ...addedPerson };
+  addedPersonWithID.hobbies = addedPersonWithID.hobbies.replace("and", ",");
+  addedPersonWithID.hobbies = addedPersonWithID.hobbies.replace(".", "");
+
+  addedPersonWithID.hobbies = addedPersonWithID.hobbies.replace(" ,", ",");
+  addedPersonWithID.hobbies = addedPersonWithID.hobbies.split(",");
+
+  console.log(addedPersonWithID.hobbies);
+  console.log(addedPersonWithID.hobbies);
+
+  profiles.push(addedPersonWithID);
+
+  res.redirect("/profiles");
+  console.log(profiles);
 });
 
 app.listen(3000, () => console.log("Listening on port 3000..."));

@@ -5,20 +5,86 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>add profile</title>
+    <style>
+      form {
+        border: 2px solid rgb(216, 216, 216);
+        width: 50%;
+        font-size: 24px;
+        text-align: center;
+        padding: 40px 0 40px 0;
+        border-radius: 30px;
+      }
+      form > div {
+        margin-bottom: 20px;
+      }
+      #wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      input {
+        font-size: 20px;
+      }
+    </style>
   </head>
   <body>
-    <div>
-      <form action="">
-        <label for="fname">First name:</label>
-        <input type="text" id="fname" name="fname" /><br /><br />
-        <label for="lname">Last name:</label>
-        <input type="text" id="lname" name="lname" /><br /><br />
-        <label for=""></label>
-        <textarea name="" id="" cols="30" rows="10"></textarea>
-        <input type="file" id="myFile" name="filename" />
-        <button type="submit">submit</button>
+    <div id="wrapper">
+      <form action="/profiles" method="post">
+        <div><label for="fname">Firstname:</label></div>
+        <div><input type="text" name="firstname" required /></div>
+        <div><label for="lname">Lastname:</label></div>
+        <div><input type="text" name="lastname" required /></div>
+        <div><label for="">Age</label></div>
+        <div><input type="text" name="age" required /></div>
+        <div><label for="">Job Role</label></div>
+        <div><input type="text" name="role" required /></div>
+        <div><label for="">Job Info</label></div>
+        <div>
+          <textarea
+            name="jobinfo"
+            id=""
+            cols="30"
+            rows="10"
+            required
+          ></textarea>
+        </div>
+        <div><label for="">Educational Background</label></div>
+        <div>
+          <textarea
+            name="educationalbg"
+            id=""
+            cols="30"
+            rows="10"
+            required
+          ></textarea>
+        </div>
+        <div><label for="">Hobbies</label></div>
+        <div>
+          <textarea
+            maxlength="50"
+            name="hobbies"
+            id=""
+            cols="30"
+            rows="10"
+            required
+          ></textarea>
+        </div>
+        <div><label for="">Favorite Quote</label></div>
+        <div>
+          <textarea
+            maxlength="50"
+            name="favoritequote"
+            id=""
+            cols="30"
+            rows="10"
+            required
+          ></textarea>
+        </div>
+
+        <div><input type="file" id="myFile" name="filename" required /></div>
+        <div><button type="submit">Submit</button></div>
       </form>
     </div>
   </body>
 </html>
-fef
