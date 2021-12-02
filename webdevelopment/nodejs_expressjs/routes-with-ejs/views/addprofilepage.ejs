@@ -31,6 +31,8 @@
   <body>
     <div id="wrapper">
       <form action="/profiles" method="post" enctype="multipart/form-data">
+        <%= typeof msg != "undefined" ? msg : "" %>
+
         <div><label for="fname">Firstname:</label></div>
         <div><input type="text" name="firstname" required /></div>
         <div><label for="lname">Lastname:</label></div>
@@ -82,7 +84,7 @@
           ></textarea>
         </div>
 
-        <div><input type="file" id="myFile" name="filename" required /></div>
+        <div><input type="file" name="profpic" required /></div>
         <div><button type="submit">Submit</button></div>
       </form>
     </div>

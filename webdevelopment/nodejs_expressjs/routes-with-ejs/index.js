@@ -1,65 +1,55 @@
 const express = require("express");
 const app = express();
+const fs = require("fs");
 const path = require("path");
+const multer = require("multer");
+
+let profiles;
+fs.readFile("./data.json", "utf-8", (err, data) => {
+  if (err) throw err;
+  profiles = JSON.parse(data);
+  console.log(profiles);
+});
 
 app.use(express.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
 
-const publicpath = path.join(__dirname + "/public");
-
 app.use(express.static("public"));
 
-var profiles = [
-  {
-    id: 1,
-    profpic: "/pers1.jpg",
-    firstname: "Martin",
-    lastname: "Pelvis",
-    age: "43",
-    role: "Senior TechLead",
-    hobbies: ["Clubbing", "Playing Football", "Tea Tasting"],
-    favoritequote: "ifjeiwfj fiewjfijewf fepwfjewjf fjewifjeiwjf feijwfijewf",
-    jobinfo:
-      "orgkorkgorkgokrogkrokg kgorkgokrgokrgk orgkorkgorkgokrogkrokg kgorkgokrgokrgk orgkorkgorkgokrogkrokg kgorkgokrgokrgk orgkorkgorkgokrogkrokg kgorkgokrgokrgk orgkorkgorkgokrogkrokg kgorkgokrgokrgk",
-    educationalbg:
-      "ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef  ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef ",
+const storage = multer.diskStorage({
+  destination: "./public",
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
   },
-  {
-    id: 2,
-    profpic: "/pers2.jpg",
-    firstname: "Selena",
-    lastname: "Franken",
-    age: "25",
-    role: "Junior Front-End Developer",
-    hobbies: ["Walking Dogs", "Yoga", "Reading Books", "Drinking Soda"],
-    favoritequote: "dqwldqåwldå pqodpwqo lcpwqlkc wpelwpe",
-    jobinfo:
-      "iejrriepwfewofkoewfk fkwpefkwpekfopewk fkpewofpkewpofk pfoekwfkpk vqiwejwiqej ijqwiejiojwe mfoeinfin fweofnoiwenf nofwenfonwefon oewnfonwefin",
-    educationalbg:
-      "nxbxiwbxwvqwxvwqvuwqvsuqw ndwiqndiwqb diuwbduvwuquv cuvucyvqcv ciuqbwciqbwc nocnwocnqwoqnc cpqwmpdmwqpomw cmnqwodmowmcqmdimqwdowmmdpqd mpdwmdqwmd pmqwpmd",
+});
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 },
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb);
   },
-  {
-    id: 3,
-    profpic: "/pers3.jpg",
-    firstname: "Hanna",
-    lastname: "Montana",
-    age: "26",
-    role: "Server Technician",
-    hobbies: [
-      "Cooking Food",
-      "Listening To Music",
-      "Gossiping",
-      "Getting Haircuts",
-      "Doing Laundry",
-    ],
-    favoritequote: "iwdjiwqk zmdmwdm owodkwdok feiwjfi",
-    jobinfo:
-      "pokwfpok pkfpweokfpowek ofkpoekfoewwenfonepn pn pfwe pnfpwef  pweoff owefo wefpewpf pwfpewfpef pfoqpqff jqifiqp qpfdpoqfmcpm ",
-    educationalbg:
-      "diowqdjioq pqpqpqpqri iejroi joifjef nn jn onfoewnfo oqidqowdj pjwqpdjqw jpdqwjidj iwjd jqpdjiqwdjowjdo joidnwdnon doqwndoinwoiqdn ondoiqwndoiqnwdoqdwqondnqondonqd owqndqo idqwj owiqdjowij",
-  },
-];
+}).single("profpic");
+
+function checkFileType(file, cb) {
+  const filetypes = /jpeg|jpg|png|gif/;
+
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+  const mimetype = filetypes.test(file.mimetype);
+
+  console.log(extname);
+  console.log(mimetype);
+
+  if (extname && mimetype) {
+    return cb(null, true);
+  } else {
+    cb("Error: Images Only!");
+  }
+} //try to implement no refreash of correct inputs on error cb
 
 app.get("/", (req, res) => {
   res.render("./home.ejs");
@@ -89,17 +79,34 @@ app.get("/addprofilepage", (req, res) => {
 });
 
 app.post("/profiles", (req, res) => {
-  var addedPerson = req.body;
-  var addedPersonWithID = { id: profiles.length + 1, ...addedPerson };
-  addedPersonWithID.hobbies = addedPersonWithID.hobbies.replace("and", ",");
-  addedPersonWithID.hobbies = addedPersonWithID.hobbies.replace(".", "");
+  upload(req, res, (err) => {
+    if (err) {
+      res.render("./addprofilepage", {
+        msg: err,
+      });
+    } else {
+      var addedPerson = req.body;
+      addedPerson.profpic = req.file.filename;
 
-  addedPersonWithID.hobbies = addedPersonWithID.hobbies.replace(" ,", ",");
-  addedPersonWithID.hobbies = addedPersonWithID.hobbies.split(",");
+      addedPerson.hobbies = addedPerson.hobbies.replace("and", ",");
+      addedPerson.hobbies = addedPerson.hobbies.replace(".", "");
+      addedPerson.hobbies = addedPerson.hobbies.replace(" ,", ",");
 
-  profiles.push(addedPersonWithID);
+      addedPerson.favoritequote = addedPerson.hobbies.replace('"', "");
 
-  res.redirect("/profiles");
+      addedPerson.hobbies = [addedPerson.hobbies];
+
+      var addedPersonhHobbies = addedPerson.hobbies;
+
+      console.log(addedPersonhHobbies);
+
+      var addedPersonWithID = { id: profiles.length + 1, ...addedPerson };
+      console.log(addedPersonWithID);
+
+      profiles.push(addedPersonWithID);
+      res.redirect("/profiles");
+    }
+  });
 });
 
 app.listen(3000, () => console.log("Listening on port 3000..."));
