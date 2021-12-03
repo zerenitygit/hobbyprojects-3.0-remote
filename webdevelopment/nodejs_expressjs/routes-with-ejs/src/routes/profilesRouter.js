@@ -1,14 +1,15 @@
-const express = require("express");
-const router = express.Router();
-const fs = require("fs");
-const path = require("path");
-const multer = require("multer");
-
-let profiles;
-fs.readFile("./data.json", "utf-8", (err, data) => {
+/*fs.readFile("./data.json", "utf-8", (err, data) => {
   if (err) throw err;
   profiles = JSON.parse(data);
-});
+  console.log("ive been rendered");
+});*/
+
+import express from "express";
+import path from "path";
+import multer from "multer";
+import fetch from "node-fetch";
+
+const router = express.Router();
 
 const storage = multer.diskStorage({
   destination: "public/img",
@@ -34,9 +35,6 @@ function checkFileType(file, cb) {
 
   const mimetype = filetypes.test(file.mimetype);
 
-  console.log(extname);
-  console.log(mimetype);
-
   if (extname && mimetype) {
     return cb(null, true);
   } else {
@@ -44,8 +42,81 @@ function checkFileType(file, cb) {
   }
 }
 
+router.get("/api", (req, res) => {
+  res.json([
+    {
+      id: 1,
+      profpic: "pers1.jpg",
+      firstname: "Martin",
+      lastname: "Pelvis",
+      age: "43",
+      role: "Senior TechLead",
+      hobbies: ["Clubbing", "Playing Football", "Tea Tasting"],
+      favoritequote: "ifjeiwfj fiewjfijewf fepwfjewjf fjewifjeiwjf feijwfijewf",
+      jobinfo:
+        "orgkorkgorkgokrogkrokg kgorkgokrgokrgk orgkorkgorkgokrogkrokg kgorkgokrgokrgk orgkorkgorkgokrogkrokg kgorkgokrgokrgk orgkorkgorkgokrogkrokg kgorkgokrgokrgk orgkorkgorkgokrogkrokg kgorkgokrgokrgk",
+      educationalbg:
+        "ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef  ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef ",
+    },
+    {
+      id: 2,
+      profpic: "pers2.jpg",
+      firstname: "Selena",
+      lastname: "Franken",
+      age: "25",
+      role: "Junior Front-End Developer",
+      hobbies: ["Walking Dogs", "Yoga", "Reading Books", "Drinking Soda"],
+      favoritequote: "dqwldqåwldå pqodpwqo lcpwqlkc wpelwpe",
+      jobinfo:
+        "iejrriepwfewofkoewfk fkwpefkwpekfopewk fkpewofpkewpofk pfoekwfkpk vqiwejwiqej ijqwiejiojwe mfoeinfin fweofnoiwenf nofwenfonwefon oewnfonwefin",
+      educationalbg:
+        "nxbxiwbxwvqwxvwqvuwqvsuqw ndwiqndiwqb diuwbduvwuquv cuvucyvqcv ciuqbwciqbwc nocnwocnqwoqnc cpqwmpdmwqpomw cmnqwodmowmcqmdimqwdowmmdpqd mpdwmdqwmd pmqwpmd",
+    },
+    {
+      id: 3,
+      profpic: "pers3.jpg",
+      firstname: "Hanna",
+      lastname: "Montana",
+      age: "26",
+      role: "Server Technician",
+      hobbies: [
+        "Cooking Food",
+        "Listening To Music",
+        "Gossiping",
+        "Getting Haircuts",
+        "Doing Laundry",
+      ],
+      favoritequote: "iwdjiwqk zmdmwdm owodkwdok feiwjfi",
+      jobinfo:
+        "pokwfpok pkfpweokfpowek ofkpoekfoewwenfonepn pn pfwe pnfpwef  pweoff owefo wefpewpf pwfpewfpef pfoqpqff jqifiqp qpfdpoqfmcpm ",
+      educationalbg:
+        "diowqdjioq pqpqpqpqri iejroi joifjef nn jn onfoewnfo oqidqowdj pjwqpdjqw jpdqwjidj iwjd jqpdjiqwdjowjdo joidnwdnon doqwndoinwoiqdn ondoiqwndoiqnwdoqdwqondnqondonqd owqndqo idqwj owiqdjowij",
+    },
+  ]);
+});
+let profiles;
 router.get("/", (req, res) => {
-  res.render("./profiles.ejs", { profiles: profiles });
+  const profiles_api_url = "http://localhost:3000/profiles/api";
+
+  const x = fetch(profiles_api_url, {
+    method: "GET",
+  });
+
+  x.then((reprOfHTTPResponse) => {
+    if (reprOfHTTPResponse.ok) {
+      reprOfHTTPResponse.json();
+    }
+  })
+    .catch((err) => {
+      console.error(err);
+    })
+    .then((parsedHTTPBody) => {
+      console.log(parsedHTTPBody);
+      res.render("./profiles.ejs", { profiles: profiles });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 router.get("/:id", (req, res) => {
@@ -94,4 +165,4 @@ router.post("/", (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;

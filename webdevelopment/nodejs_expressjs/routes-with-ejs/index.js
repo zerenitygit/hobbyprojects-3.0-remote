@@ -1,8 +1,9 @@
-const express = require("express");
-const app = express();
-const port = 3000;
+import express from "express";
+import profilesRoutes from "./src/routes/profilesRouter.js";
 
-const profilesRoutes = require("./src/routes/profilesRouter.js");
+const app = express();
+
+const port = 3000;
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -12,7 +13,7 @@ app.set("view engine", "ejs");
 app.set("views", "public/views");
 
 app.get("/", (req, res) => {
-  res.render("./home.ejs");
+  res.render("home.ejs");
 });
 
 app.use("/profiles", profilesRoutes);
@@ -22,7 +23,9 @@ app.get("/addprofile", (req, res) => {
 });
 
 app.use((req, res) => {
-  res.send("Not a web route on this domain: 404");
+  res.status(404).send("Not a web route on this domain: 404");
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}...`));
+
+//module.exports = profiles;
