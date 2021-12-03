@@ -35,7 +35,9 @@
   <body>
     <div id="wrapper">
       <div id="flexcontainer">
-        <div id="leftside"><img src="/<%= profile.profpic %>" alt="" /></div>
+        <div id="leftside">
+          <img src="/img/<%= profile.profpic %>" alt="" />
+        </div>
         <div id="rightside">
           <p>
             <%= profile.firstname%> <%= profile.lastname %>, <%= profile.age %>

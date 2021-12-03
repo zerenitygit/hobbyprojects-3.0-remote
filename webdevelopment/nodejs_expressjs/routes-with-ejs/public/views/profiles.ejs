@@ -28,7 +28,9 @@
       <a href="/"><button>Return to homepage</button></a>
       <% profiles.forEach((profile) => { %>
       <div id="container">
-        <div id="leftside"><img src="/<%= profile.profpic %>" alt="" /></div>
+        <div id="leftside">
+          <img src="/img/<%= profile.profpic %>" alt="" />
+        </div>
         <div id="rightside">
           <p>Firstname: <%= profile.firstname %></p>
           <p>Lastname: <%= profile.lastname %></p>
