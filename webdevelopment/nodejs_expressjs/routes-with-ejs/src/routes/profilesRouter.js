@@ -11,6 +11,8 @@ import fetch from "node-fetch";
 
 const router = express.Router();
 
+const profiles_api_url = "http://localhost:3000/profiles/api";
+
 const storage = multer.diskStorage({
   destination: "public/img",
   filename: function (req, file, cb) {
@@ -41,6 +43,19 @@ function checkFileType(file, cb) {
     cb("Error: Images Only!");
   }
 }
+
+router.get("/api/:id", (req, res) => {
+  fetch(profiles_api_url, { method: "GET" }).then((response) => {
+    response.json().then((response) => {
+      let users = [];
+
+      users = response;
+
+      let profile = users.find((profile) => profile.id == req.params.id);
+      res.json(profile);
+    });
+  });
+});
 
 router.get("/api", (req, res) => {
   res.json([
@@ -94,34 +109,54 @@ router.get("/api", (req, res) => {
     },
   ]);
 });
-let profiles;
 router.get("/", (req, res) => {
-  const profiles_api_url = "http://localhost:3000/profiles/api";
-
-  const x = fetch(profiles_api_url, {
-    method: "GET",
-  });
-
-  x.then((reprOfHTTPResponse) => {
-    if (reprOfHTTPResponse.ok) {
-      reprOfHTTPResponse.json();
-    }
-  })
-    .catch((err) => {
-      console.error(err);
-    })
-    .then((parsedHTTPBody) => {
-      console.log(parsedHTTPBody);
-      res.render("./profiles.ejs", { profiles: profiles });
-    })
-    .catch((err) => {
-      console.log(err);
+  fetch(profiles_api_url, { method: "GET" }).then((response) => {
+    response.json().then((response) => {
+      let profiles = response;
+      res.render("profiles.ejs", { profiles: profiles });
     });
+  });
 });
 
 router.get("/:id", (req, res) => {
-  var profile = profiles.find((profile) => profile.id == req.params.id);
-  var profileID = profile.id;
+  const profile_id_api_url = `http://localhost:3000/profiles/api/${req.params.id}`;
+
+  fetch(profile_id_api_url, { method: "GET" }).then((response) => {
+    response.json().then((response) => {
+      let profile = {};
+
+      profile = response;
+
+      var profileID = profile["id"];
+
+      fetch(profiles_api_url, { method: "GET" }).then((response) =>
+        response.json().then((response) => {
+          let data = [];
+
+          data = response;
+
+          var nextperson;
+
+          if (profileID == data.length) {
+            nextperson = data[0];
+          } else {
+            nextperson = data.find((profile) => profile.id == profileID + 1);
+          }
+
+          // console.log(data);
+          console.log(profile);
+          console.log(nextperson);
+
+          res.render("./profile.ejs", {
+            profile: profile,
+            nextperson: nextperson,
+          });
+        })
+      );
+    });
+  });
+
+  /*
   var nextperson;
   if (profile.id == profiles.length) {
     nextperson = profiles[0];
@@ -131,7 +166,7 @@ router.get("/:id", (req, res) => {
   res.render("./profile.ejs", {
     profile: profile,
     nextperson: nextperson,
-  });
+  });*/
 });
 
 router.post("/", (req, res) => {
