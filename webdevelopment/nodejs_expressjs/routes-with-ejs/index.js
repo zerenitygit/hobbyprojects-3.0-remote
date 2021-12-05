@@ -6,6 +6,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use(express.static("public"));
 
@@ -27,5 +28,3 @@ app.use((req, res) => {
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}...`));
-
-//module.exports = profiles;

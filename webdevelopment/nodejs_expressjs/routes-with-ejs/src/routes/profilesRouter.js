@@ -1,13 +1,8 @@
-/*fs.readFile("./data.json", "utf-8", (err, data) => {
-  if (err) throw err;
-  profiles = JSON.parse(data);
-  console.log("ive been rendered");
-});*/
-
 import express from "express";
 import path from "path";
 import multer from "multer";
 import fetch from "node-fetch";
+import profiles from "../../profiles.js";
 
 const router = express.Router();
 
@@ -44,6 +39,10 @@ function checkFileType(file, cb) {
   }
 }
 
+router.get("/api", (req, res) => {
+  res.json(profiles);
+});
+
 router.get("/api/:id", (req, res) => {
   fetch(profiles_api_url, { method: "GET" }).then((response) => {
     response.json().then((response) => {
@@ -57,62 +56,48 @@ router.get("/api/:id", (req, res) => {
   });
 });
 
-router.get("/api", (req, res) => {
-  res.json([
-    {
-      id: 1,
-      profpic: "pers1.jpg",
-      firstname: "Martin",
-      lastname: "Pelvis",
-      age: "43",
-      role: "Senior TechLead",
-      hobbies: ["Clubbing", "Playing Football", "Tea Tasting"],
-      favoritequote: "ifjeiwfj fiewjfijewf fepwfjewjf fjewifjeiwjf feijwfijewf",
-      jobinfo:
-        "orgkorkgorkgokrogkrokg kgorkgokrgokrgk orgkorkgorkgokrogkrokg kgorkgokrgokrgk orgkorkgorkgokrogkrokg kgorkgokrgokrgk orgkorkgorkgokrogkrokg kgorkgokrgokrgk orgkorkgorkgokrogkrokg kgorkgokrgokrgk",
-      educationalbg:
-        "ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef  ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef ifjiwejfoije vjef,pofkewpofk fopekfpoewkf fpoewkfpoewkfpkef ",
-    },
-    {
-      id: 2,
-      profpic: "pers2.jpg",
-      firstname: "Selena",
-      lastname: "Franken",
-      age: "25",
-      role: "Junior Front-End Developer",
-      hobbies: ["Walking Dogs", "Yoga", "Reading Books", "Drinking Soda"],
-      favoritequote: "dqwldqåwldå pqodpwqo lcpwqlkc wpelwpe",
-      jobinfo:
-        "iejrriepwfewofkoewfk fkwpefkwpekfopewk fkpewofpkewpofk pfoekwfkpk vqiwejwiqej ijqwiejiojwe mfoeinfin fweofnoiwenf nofwenfonwefon oewnfonwefin",
-      educationalbg:
-        "nxbxiwbxwvqwxvwqvuwqvsuqw ndwiqndiwqb diuwbduvwuquv cuvucyvqcv ciuqbwciqbwc nocnwocnqwoqnc cpqwmpdmwqpomw cmnqwodmowmcqmdimqwdowmmdpqd mpdwmdqwmd pmqwpmd",
-    },
-    {
-      id: 3,
-      profpic: "pers3.jpg",
-      firstname: "Hanna",
-      lastname: "Montana",
-      age: "26",
-      role: "Server Technician",
-      hobbies: [
-        "Cooking Food",
-        "Listening To Music",
-        "Gossiping",
-        "Getting Haircuts",
-        "Doing Laundry",
-      ],
-      favoritequote: "iwdjiwqk zmdmwdm owodkwdok feiwjfi",
-      jobinfo:
-        "pokwfpok pkfpweokfpowek ofkpoekfoewwenfonepn pn pfwe pnfpwef  pweoff owefo wefpewpf pwfpewfpef pfoqpqff jqifiqp qpfdpoqfmcpm ",
-      educationalbg:
-        "diowqdjioq pqpqpqpqri iejroi joifjef nn jn onfoewnfo oqidqowdj pjwqpdjqw jpdqwjidj iwjd jqpdjiqwdjowjdo joidnwdnon doqwndoinwoiqdn ondoiqwndoiqnwdoqdwqondnqondonqd owqndqo idqwj owiqdjowij",
-    },
-  ]);
+router.post("/api", (req, res) => {
+  upload(req, res, (err) => {
+    if (err) {
+      res.render("./addprofilepage.ejs", {
+        msg: err,
+      });
+    } else {
+      console.log(req.body);
+      console.log(req.file);
+
+      let newProfile = req.body;
+      newProfile.profpic = req.file.filename;
+
+      newProfile.hobbies = newProfile.hobbies.replace(/\s/g, " ").trim();
+
+      console.log(newProfile.hobbies);
+
+      newProfile.hobbies = newProfile.hobbies.replace("and", "");
+      newProfile.hobbies = newProfile.hobbies.replace(".", "");
+
+      newProfile.favoritequote = newProfile.favoritequote.replace('"', "");
+
+      /* addedPerson.hobbies = [addedPerson.hobbies];
+
+      var addedPersonhHobbies = addedPerson.hobbies;
+
+      console.log(addedPersonhHobbies);
+
+      var addedPersonWithID = { id: profiles.length + 1, ...addedPerson };
+      console.log(addedPersonWithID);
+
+      profiles.push(addedPersonWithID);
+      console.log(addedPersonWithID);
+      res.redirect("/");*/
+    }
+  });
 });
+
 router.get("/", (req, res) => {
   fetch(profiles_api_url, { method: "GET" }).then((response) => {
     response.json().then((response) => {
-      let profiles = response;
+      profiles = response;
       res.render("profiles.ejs", { profiles: profiles });
     });
   });
@@ -129,74 +114,19 @@ router.get("/:id", (req, res) => {
 
       var profileID = profile["id"];
 
-      fetch(profiles_api_url, { method: "GET" }).then((response) =>
-        response.json().then((response) => {
-          let data = [];
+      var nextperson;
 
-          data = response;
+      if (profileID == profiles.length) {
+        nextperson = profiles[0];
+      } else {
+        nextperson = profiles.find((profile) => profile.id == profileID + 1);
+      }
 
-          var nextperson;
-
-          if (profileID == data.length) {
-            nextperson = data[0];
-          } else {
-            nextperson = data.find((profile) => profile.id == profileID + 1);
-          }
-
-          // console.log(data);
-          console.log(profile);
-          console.log(nextperson);
-
-          res.render("./profile.ejs", {
-            profile: profile,
-            nextperson: nextperson,
-          });
-        })
-      );
-    });
-  });
-
-  /*
-  var nextperson;
-  if (profile.id == profiles.length) {
-    nextperson = profiles[0];
-  } else {
-    nextperson = profiles.find((profile) => profile.id == profileID + 1);
-  }
-  res.render("./profile.ejs", {
-    profile: profile,
-    nextperson: nextperson,
-  });*/
-});
-
-router.post("/", (req, res) => {
-  upload(req, res, (err) => {
-    if (err) {
-      res.render("./addprofilepage.ejs", {
-        msg: err,
+      res.render("./profile.ejs", {
+        profile: profile,
+        nextperson: nextperson,
       });
-    } else {
-      var addedPerson = req.body;
-      addedPerson.profpic = req.file.filename;
-
-      addedPerson.hobbies = addedPerson.hobbies.replace("and", ",");
-      addedPerson.hobbies = addedPerson.hobbies.replace(".", "");
-      addedPerson.hobbies = addedPerson.hobbies.replace(" ,", ",");
-
-      addedPerson.favoritequote = addedPerson.hobbies.replace('"', "");
-
-      addedPerson.hobbies = [addedPerson.hobbies];
-
-      var addedPersonhHobbies = addedPerson.hobbies;
-
-      console.log(addedPersonhHobbies);
-
-      var addedPersonWithID = { id: profiles.length + 1, ...addedPerson };
-      console.log(addedPersonWithID);
-
-      profiles.push(addedPersonWithID);
-      res.redirect("/profiles");
-    }
+    });
   });
 });
 
