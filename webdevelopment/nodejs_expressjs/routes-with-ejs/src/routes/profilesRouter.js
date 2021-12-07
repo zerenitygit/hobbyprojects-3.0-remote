@@ -63,33 +63,57 @@ router.post("/api", (req, res) => {
         msg: err,
       });
     } else {
-      console.log(req.body);
-      console.log(req.file);
-
       let newProfile = req.body;
       newProfile.profpic = req.file.filename;
 
-      newProfile.hobbies = newProfile.hobbies.replace(/\s/g, " ").trim();
+      //make number checker in ejs file
 
+      //these particular name check declerations are for demonstrational purposes only as evidently people can in fact be called for instance X Æ A-12
+
+      newProfile.firstname = newProfile.firstname
+        .replace(/[^\w]+|_/g, "")
+        .trim();
+
+      newProfile.lastname = newProfile.lastname.replace(/[^\w]+|_/g, "").trim();
+
+      newProfile.age = newProfile.age.replace(/[^\d]+/g, "").trim();
+
+      newProfile.role = newProfile.role.replace(/[^\w]+|_/g, " ").trim();
+
+      newProfile.jobinfo = newProfile.jobinfo.replace(/[^\w]+|_/g, " ").trim();
+
+      newProfile.educationalbg = newProfile.educationalbg
+        .replace(/[^\w]+|_/g, " ")
+        .trim();
+
+      newProfile.hobbies = newProfile.hobbies
+        .replace(/[^\w|\s|,|]|_/g, "")
+        .trim();
+
+      newProfile.hobbies = newProfile.hobbies.replace(/\s+/g, " ");
+
+      newProfile.hobbies = newProfile.hobbies.replace("and", ",");
+
+      newProfile.hobbies = newProfile.hobbies.replace(/\s,/g, ",");
+
+      newProfile.hobbies = newProfile.hobbies.replace(/,\s/g, ",");
+
+      newProfile.hobbies = newProfile.hobbies.split(",");
       console.log(newProfile.hobbies);
 
-      newProfile.hobbies = newProfile.hobbies.replace("and", "");
-      newProfile.hobbies = newProfile.hobbies.replace(".", "");
+      newProfile.hobbies.forEach((item, index) => {
+        newProfile.hobbies[index] =
+          item.charAt(0).toUpperCase() + item.substring(1, item.length);
+      });
 
-      newProfile.favoritequote = newProfile.favoritequote.replace('"', "");
+      newProfile.favoritequote = newProfile.favoritequote
+        .replace(/[^\w]+|_/g, " ")
+        .trim();
 
-      /* addedPerson.hobbies = [addedPerson.hobbies];
+      newProfile = { id: profiles.length + 1, ...newProfile };
 
-      var addedPersonhHobbies = addedPerson.hobbies;
-
-      console.log(addedPersonhHobbies);
-
-      var addedPersonWithID = { id: profiles.length + 1, ...addedPerson };
-      console.log(addedPersonWithID);
-
-      profiles.push(addedPersonWithID);
-      console.log(addedPersonWithID);
-      res.redirect("/");*/
+      profiles.push(newProfile);
+      res.redirect("/");
     }
   });
 });
@@ -97,8 +121,9 @@ router.post("/api", (req, res) => {
 router.get("/", (req, res) => {
   fetch(profiles_api_url, { method: "GET" }).then((response) => {
     response.json().then((response) => {
-      profiles = response;
-      res.render("profiles.ejs", { profiles: profiles });
+      console.log(response);
+      let data = response;
+      res.render("profiles.ejs", { profiles: data });
     });
   });
 });
